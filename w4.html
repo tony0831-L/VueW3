@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第四周</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="app">
+       <header>
+           <h1>六角記事本-Composition API</h1>
+       </header>
+       <main>
+           <div class="add">
+            <input type="text" @keyup.enter="add" v-model="newthings" placeholder="新增待辦事項">
+            <i class="bi bi-plus-lg" @click="add"></i>
+           </div>
+           <div class="list">
+               <div v-for="(i,index) in filterData" :key="i.id" class="lists">
+                   <div class="logs">
+                    <span>
+                        {{index+1}} .
+                        <input type="checkbox" style="width: auto;" @change="done()" v-model="i.done">
+                    </span>
+                    <span @click="edit(i.id)" v-show="!(i.id===nowediting)" :class="{done:i.done}">
+                        {{i.data}}
+                    </span>
+                    <input type="text" @keyup.enter="save" v-model="temp.data" v-show="i.id===nowediting">
+                   </div>
+                <div class="func">
+                    <i class="bi bi-pen" @click="edit(i.id)"></i>
+                    <i class="bi bi-trash" @click="del(i.id)" style="margin-left: 1em;"></i>
+                </div>
+               </div>
+               <div class="listfooter">
+                   <span>共{{list.length}}筆待辦事項</span>
+                   <a @click="filter=''" :class="{act:filter===''}">全部</a>
+                   <a @click="filter=true" :class="{act:filter===true}">已完成</a>
+                   <a  @click="filter=false":class="{act:filter===false}">未完成</a>
+                   <a @click="clear">Clear</a>
+                </div>
+           </div>
+       </main>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
